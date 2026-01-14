@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const logger = require('../middleware/loggerMiddleware'); 
 
-const {getDataFamilyById} = require('../controller/dataFamilyController');
+const {getDataFamilyById, getDataById, getDataAll} = require('../controller/dataFamilyController');
 
-router.get("/getData/:id", logger.requestLogger, getDataFamilyById);
+router.get("/getDataFamily/:id", logger.requestLogger, getDataFamilyById);
+router.get("/getDataById/:id", logger.requestLogger, getDataById);
+router.get("/getDataAll", logger.requestLogger, getDataAll);
 
 module.exports = router;
