@@ -1,7 +1,7 @@
 const logger = require('../config/logger');
 const httpClient = require('../config/httpClient');
-const { log } = require('winston');
 const payloadParsing = require('../utils/payloadParsing');
+const {doGet} = require('../service/gasService');
 
 async function getDataFamilyById(req, res) {
     logger.debug('memasuki controller getDataFamilyById dengan params: ' + JSON.stringify(req.params));
@@ -9,18 +9,10 @@ async function getDataFamilyById(req, res) {
 
     try {
         logger.debug(`Mengirim request ke GAS Service untuk mendapatkan data family dengan ID: ${id}`);
-        const response = await httpClient.get(process.env.GAS_URL, {
-            params: {
-                api_key: process.env.API_KEY,
-                action: 'getFamily',
-                id: id
-            }
-        })
-        logger.debug('Response dari GAS Service: ' + JSON.stringify(response.data));
-        const result = response.data;
+        const response = await doGet('getFamily', id);
 
-        logger.debug(`Data family with ID ${id} retrieved successfully`);
-        return res.status(200).json(result.data);
+        logger.debug(`Transaksi getDataFamilyById dengan id:${id} selesai`);
+        return res.status(200).json(response);
 
     } catch (error) {
         logger.error(`Error retrieving data family with ID ${id}: ` + error.message);
@@ -34,18 +26,10 @@ async function getDataById(req, res) {
 
     try {
         logger.debug(`Mengirim request ke GAS Service untuk mendapatkan data dengan ID: ${id}`);
-        const response = await httpClient.get(process.env.GAS_URL, {
-            params: {
-                api_key: process.env.API_KEY,
-                action: 'getById',
-                id: id
-            }
-        })
-        logger.debug('Response dari GAS Service: ' + JSON.stringify(response.data));
-        const result = response.data;
+        const response = await doGet('getById', id);
 
-        logger.debug(`Data with ID ${id} retrieved successfully`);
-        return res.status(200).json(result.data);
+        logger.debug(`Transaksi getDataById dengan id:${id} selesai`);
+        return res.status(200).json(response);
 
     } catch (error) {
         logger.error(`Error retrieving data with ID ${id}: ` + error.message);
@@ -53,22 +37,15 @@ async function getDataById(req, res) {
     }
 }
 
-async function getDataAll(req, res) {
+async function getDataAll(res) {
     logger.debug('memasuki controller getDataAll');
 
     try {
         logger.debug(`Mengirim request ke GAS Service untuk mendapatkan semua data`);
-        const response = await httpClient.get(process.env.GAS_URL, {
-            params: {
-                api_key: process.env.API_KEY,
-                action: 'getAll'
-            }
-        })
-        logger.debug('Response dari GAS Service: ' + JSON.stringify(response.data));
-        const result = response.data;
+        const response = await doGet('getAll');
 
-        logger.debug(`All data retrieved successfully`);
-        return res.status(200).json(result.data);
+        logger.debug(`Transaksi getDataAll selesai`);
+        return res.status(200).json(response);
 
     } catch (error) {
         logger.error(`Error retrieving all data: ` + error.message);

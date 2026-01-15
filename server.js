@@ -1,5 +1,5 @@
 const logger = require('./src/config/logger');
-const { connectToAPIGAS } = require('./src/config/gasConnect');
+const { connectToAPIGAS } = require('./src/config/gasConnectTest');
 
 const dotenv = require('dotenv');
 dotenv.config();
