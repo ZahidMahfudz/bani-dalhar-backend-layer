@@ -70,4 +70,37 @@ async function postAddPersonData(req, res) {
     }
 }
 
-module.exports = { getDataFamilyById, getDataById, getDataAll, postAddPersonData };
+async function postUpdatePersonData(req, res) {
+    logger.debug('memasuki controller postUpdatePersonData dengan body: ' + JSON.stringify(req.body));
+
+    const body = payloadParsing(req.body, 'update');
+
+    try {
+        logger.debug(`Mengirim request ke GAS Service untuk mengupdate data person: ` + JSON.stringify(body));
+        const response = await doPost('update', body);
+
+        logger.debug(`Transaksi postUpdatePersonData selesai`);
+        return res.status(200).json(response);
+    } catch (error) {
+        logger.error(`Error updating person data: ` + error.message);
+        return res.status(500).json({ status: 'error', message: 'Failed to update person data' });
+    }
+}
+
+async function postDeletePersonData(req, res) {
+    logger.debug('memasuki controller postDeletePersonData dengan body: ' + JSON.stringify(req.body));
+    const body = payloadParsing(req.body, 'delete');
+
+    try {
+        logger.debug(`Mengirim request ke GAS Service untuk menghapus data person: ` + JSON.stringify(body));
+        const response = await doPost('delete', body);
+
+        logger.debug(`Transaksi postDeletePersonData selesai`);
+        return res.status(200).json(response);
+    } catch (error) {
+        logger.error(`Error deleting person data: ` + error.message);
+        return res.status(500).json({ status: 'error', message: 'Failed to delete person data' });
+    }
+}
+
+module.exports = { getDataFamilyById, getDataById, getDataAll, postAddPersonData, postUpdatePersonData, postDeletePersonData };
