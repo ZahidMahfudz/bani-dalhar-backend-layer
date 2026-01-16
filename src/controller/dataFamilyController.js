@@ -1,7 +1,7 @@
 const logger = require('../config/logger');
 const httpClient = require('../config/httpClient');
 const payloadParsing = require('../utils/payloadParsing');
-const {doGet} = require('../service/gasService');
+const {doGet, doPost} = require('../service/gasService');
 
 async function getDataFamilyById(req, res) {
     logger.debug('memasuki controller getDataFamilyById dengan params: ' + JSON.stringify(req.params));
@@ -60,17 +60,10 @@ async function postAddPersonData(req, res) {
 
     try {
         logger.debug(`Mengirim request ke GAS Service untuk menambahkan data person: ` + JSON.stringify(body));
-        const response = await httpClient.post(process.env.GAS_URL, body, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
+        const response = await doPost('create', body);
 
-        logger.debug('Response dari GAS Service: ' + JSON.stringify(response.data));
-        const result = response.data;
-
-        logger.debug(`Person data added successfully`);
-        return res.status(200).json(result);
+        logger.debug(`Transaksi postAddPersonData selesai`);
+        return res.status(200).json(response);
     } catch (error) {
         logger.error(`Error adding person data: ` + error.message);
         return res.status(500).json({ status: 'error', message: 'Failed to add person data' });

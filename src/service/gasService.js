@@ -36,5 +36,27 @@ async function doGet(action, id = null) {
     }
 }
 
-module.exports = { doGet };
+async function doPost(action, body) {
+    logger.debug(`memasuki service doPost dengan action: ${action}, body: ` + JSON.stringify(body));
 
+    try {
+        logger.debug(`Mengirim request POST ke GAS Service dengan action: ${action}, body: ` + JSON.stringify(body));
+        const response = await httpClient.post(process.env.GAS_URL, body, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        logger.debug('Response dari GAS Service: ' + JSON.stringify(response.data));
+        const result = response.data;
+
+        logger.debug(`doPost dengan action: ${action} berhasil`);
+        return result;
+
+    } catch (error) {
+        logger.error(`Error in doPost with action: ${action}: ` + error.message);
+        throw error;
+    }
+}
+
+module.exports = { doGet, doPost };
