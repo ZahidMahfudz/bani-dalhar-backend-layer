@@ -1,0 +1,15 @@
+{
+  "enabled": true,
+  "name": "Generate Tests & Docs After Feature",
+  "description": "Automatically generates unit tests with multiple scenarios and API documentation (description, usage, request/response details) after a feature is implemented through the full stack (route → middleware → controller → service)",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Saya baru saja menyelesaikan implementasi sebuah fitur baru yang mencakup route, middleware, controller, dan service. Silakan:\n\n1. **Buat Unit Tests** - Buatkan file test untuk fitur ini dengan berbagai skenario pengujian:\n   - Test case untuk success path\n   - Test case untuk error handling\n   - Test case untuk edge cases\n   - Mock external dependencies (GAS service calls)\n   - Gunakan framework testing yang sesuai (jest atau vitest)\n\n2. **Buat Dokumentasi API** - Buatkan dokumentasi lengkap yang mencakup:\n   - Deskripsi singkat fitur\n   - Endpoint dan HTTP method\n   - Cara penggunaan (usage examples)\n   - Detail request (parameters, headers, body format)\n   - Detail response (success dan error responses)\n   - Status codes yang mungkin\n   - Contoh curl atau request format\n\nLetakkan test file di folder `src/__tests__/` dan dokumentasi di file `API_DOCS.md` atau folder `docs/`."
+  },
+  "workspaceFolderName": "backend_layer",
+  "shortName": "feature-test-docs"
+}

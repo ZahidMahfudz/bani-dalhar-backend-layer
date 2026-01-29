@@ -1,8 +1,11 @@
-const httpClient = require('../config/httpClient');
-const logger = require('../config/logger');
+// const httpClient = require('../config/httpClient');
+// const logger = require('../config/logger');
+
+import httpClient from '../config/httpClient.js';
+import logger from '../config/logger.js';
 
 
-async function doGet(action, id = null) {
+export async function doGet(action, id = null) {
     logger.debug(`memasuki service doGet dengan action: ${action}, id: ${id}`);
 
     try {
@@ -36,7 +39,7 @@ async function doGet(action, id = null) {
     }
 }
 
-async function doPost(action, body) {
+export async function doPost(action, body) {
     logger.debug(`memasuki service doPost dengan action: ${action}, body: ` + JSON.stringify(body));
 
     try {
@@ -59,4 +62,4 @@ async function doPost(action, body) {
     }
 }
 
-module.exports = { doGet, doPost };
+// module.exports = { doGet, doPost };

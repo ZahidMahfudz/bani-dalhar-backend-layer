@@ -1,8 +1,10 @@
-const httpClient = require('./httpClient');
-const logger = require('./logger');
-const {doGet} = require('../service/gasService');
+// const logger = require('./logger');
+// const {doGet} = require('../service/gasService');
 
-async function connectToAPIGAS() {
+import logger from './logger.js';
+import {doGet} from '../service/gasService.js';
+
+export async function connectToAPIGAS() {
     try {
         const response = await doGet('ping');
         logger.info('API Google Apps Script Bani Dalhar Sukses Aktif');
@@ -13,4 +15,4 @@ async function connectToAPIGAS() {
     }
 }
 
-module.exports = {connectToAPIGAS};
+// module.exports = {connectToAPIGAS};

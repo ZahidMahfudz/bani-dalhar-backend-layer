@@ -1,9 +1,14 @@
-const logger = require('../config/logger');
-const httpClient = require('../config/httpClient');
-const payloadParsing = require('../utils/payloadParsing');
-const {doGet, doPost} = require('../service/gasService');
+// const logger = require('../config/logger');
+// const httpClient = require('../config/httpClient');
+// const payloadParsing = require('../utils/payloadParsing');
+// const {doGet, doPost} = require('../service/gasService');
 
-async function getDataFamilyById(req, res) {
+import logger from '../config/logger.js';
+import httpClient from '../config/httpClient.js';
+import payloadParsing from '../utils/payloadParsing.js';
+import {doGet, doPost} from '../service/gasService.js';
+
+export async function getDataFamilyById(req, res) {
     logger.debug('memasuki controller getDataFamilyById dengan params: ' + JSON.stringify(req.params));
     const { id } = req.params;
 
@@ -20,7 +25,7 @@ async function getDataFamilyById(req, res) {
     }
 }
 
-async function getDataById(req, res) {
+export async function getDataById(req, res) {
     logger.debug('memasuki controller getDataById dengan params: ' + JSON.stringify(req.params));
     const { id } = req.params;
 
@@ -37,7 +42,7 @@ async function getDataById(req, res) {
     }
 }
 
-async function getDataAll(res) {
+export async function getDataAll(res) {
     logger.debug('memasuki controller getDataAll');
 
     try {
@@ -53,7 +58,7 @@ async function getDataAll(res) {
     }
 }
 
-async function postAddPersonData(req, res) {
+export async function postAddPersonData(req, res) {
     logger.debug('memasuki controller postAddPersonData dengan body: ' + JSON.stringify(req.body));
 
     const body = payloadParsing(req.body, 'create')
@@ -70,7 +75,7 @@ async function postAddPersonData(req, res) {
     }
 }
 
-async function postUpdatePersonData(req, res) {
+export async function postUpdatePersonData(req, res) {
     logger.debug('memasuki controller postUpdatePersonData dengan body: ' + JSON.stringify(req.body));
 
     const body = payloadParsing(req.body, 'update');
@@ -87,7 +92,7 @@ async function postUpdatePersonData(req, res) {
     }
 }
 
-async function postDeletePersonData(req, res) {
+export async function postDeletePersonData(req, res) {
     logger.debug('memasuki controller postDeletePersonData dengan body: ' + JSON.stringify(req.body));
     const body = payloadParsing(req.body, 'delete');
 
@@ -103,4 +108,4 @@ async function postDeletePersonData(req, res) {
     }
 }
 
-module.exports = { getDataFamilyById, getDataById, getDataAll, postAddPersonData, postUpdatePersonData, postDeletePersonData };
+// module.exports = { getDataFamilyById, getDataById, getDataAll, postAddPersonData, postUpdatePersonData, postDeletePersonData };

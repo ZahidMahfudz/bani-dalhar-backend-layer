@@ -1,4 +1,5 @@
-const {createLogger, format, transports} = require('winston');
+// const {createLogger, format, transports} = require('winston');
+import {createLogger, format, transports} from 'winston';
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -13,4 +14,6 @@ const logger = createLogger({
     ]
 });
 
-module.exports = logger;
+// module.exports = logger;
+
+export default logger;

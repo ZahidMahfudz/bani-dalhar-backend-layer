@@ -1,6 +1,7 @@
-const logger = require('../config/logger');
+// const logger = require('../config/logger');
+import logger from '../config/logger.js';
 
-function payloadParsing(body = {}, action) {
+export default function payloadParsing(body = {}, action) {
     const getValue = (value) => value ?? "";
 
     const parsedPayload = {
@@ -25,4 +26,4 @@ function payloadParsing(body = {}, action) {
     return parsedPayload;
 }
 
-module.exports = payloadParsing;
+// module.exports = payloadParsing;

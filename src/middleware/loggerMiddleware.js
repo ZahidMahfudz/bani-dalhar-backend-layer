@@ -1,4 +1,5 @@
-const logger = require('../config/logger')
+// const logger = require('../config/logger')
+import logger from '../config/logger.js';
 
 const requestLogger = (req, res, next) => {
     logger.info(`Request ke '${req.url}' dengan method : ${req.method} `);
@@ -6,5 +7,8 @@ const requestLogger = (req, res, next) => {
     next();
 }
 
-module.exports = {requestLogger}
+// module.exports = {requestLogger}
+export default {requestLogger};
+
+
 

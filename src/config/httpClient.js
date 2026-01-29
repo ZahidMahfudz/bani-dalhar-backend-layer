@@ -1,4 +1,5 @@
-const axios = require('axios');
+// const axios = require('axios');
+import axios from 'axios';
 const httpClient = axios.create();
 
-module.exports = httpClient;
+export default httpClient;
