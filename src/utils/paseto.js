@@ -1,5 +1,4 @@
 import { V4 } from 'paseto';
-import { Buffer } from 'buffer';
 import logger from '../config/logger.js';
 
 let key;
@@ -14,17 +13,23 @@ function getKey() {
       throw new Error('❌ PASETO_KEY tidak didefinisikan. Periksa file .env Anda');
     }
 
-    // 🔐 HARUS 32 byte
-    // pakai base64 (sesuai dengan .env.dev)
-    key = Buffer.from(process.env.PASETO_KEY, 'base64');
+    // 🔐 PASETO_KEY adalah format PEM (private key)
+    // Contoh format:
+    // -----BEGIN PRIVATE KEY-----
+    // MC4CAQAwBQYDK2VwBCIEIGERcTvfwiYrjRDhZu4Gmk+WDU/JFoipI3et1U+mPY52
+    // -----END PRIVATE KEY-----
+    
+    key = process.env.PASETO_KEY;
     logger.debug('Secret key PASETO berhasil dimuat dari .env.dev');
+    logger.debug(`KEY (first 50 chars): ${key}`);
   }
   return key;
 }
 
 /* =========================
-   CREATE TOKEN (LOCAL)
+   CREATE TOKEN (PUBLIC)
    Token berlaku 30 menit
+   Menggunakan public key (asymmetric)
 ========================= */
 export async function createToken(payload) {
   try {
@@ -40,6 +45,8 @@ export async function createToken(payload) {
       exp: expirationTime.toISOString()
     };
     
+    logger.debug(`Token payload: ${JSON.stringify(tokenPayload)}`);
+    
     const token = await V4.sign(tokenPayload, getKey());
     
     logger.info(`Token berhasil dibuat untuk user: ${payload.email}`);
@@ -51,7 +58,8 @@ export async function createToken(payload) {
 }
 
 /* =========================
-   VERIFY TOKEN
+   VERIFY TOKEN (PUBLIC)
+   Menggunakan public key (asymmetric)
 ========================= */
 export async function verifyToken(token) {
   try {

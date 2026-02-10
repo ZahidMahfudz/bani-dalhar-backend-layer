@@ -36,7 +36,7 @@ export async function authMiddleware(req, res, next) {
     // Verifikasi token
     const payload = await verifyToken(token);
 
-    logger.info(`Token berhasil diverifikasi untuk user: ${payload.email}`);
+    logger.debug(`Token berhasil diverifikasi untuk user: ${payload.email}`);
 
     // Simpan payload ke request object untuk digunakan di controller
     req.user = payload;
